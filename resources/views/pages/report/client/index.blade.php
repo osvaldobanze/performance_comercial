@@ -5,7 +5,7 @@
     <div class="pt-3 pb-5">
         <div class="card">
             <div class="card-header">
-                Relatorio por Consultor
+                Relatorio por Clientes
             </div>
             <div class="card-body">
                 <h5 class="card-title" style="font-size: 12px">Selecione o cliente/s para obter o relatorio:</h5> <hr>
@@ -16,8 +16,8 @@
                         <div class="col-md-4">
                             <label for="consultor" class="form-label">Consultor</label>
                             <select id="consultor" required name="consultor" class="form-select">
-                                @foreach ($consultor_list as $data)
-                                    <option value="{{ $data->co_usuario }}">{{ $data->no_usuario }}</option>
+                                @foreach ($client_list as $data)
+                                    <option value="{{ $data->co_cliente }}">{{ $data->no_contato }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -85,13 +85,13 @@
 
                     <div class="col-12 pt-4">
                         <a class="btn btn-info btn-sm" id="listBtn">
-                            Gerar Relatorio <i class="fa fa-list"></i>
+                            Gerar Relatorio <i class="fa fa-plus"></i>
                         </a>
-                        <a class="btn btn-warning btn-sm" href="#">
-                            Gerar Grafico <i class="fa fa-bar-chart"></i>
+                        <a class="btn btn-warning btn-sm" href="">
+                            Gerar Grafico <i class="fa fa-plus"></i>
                         </a>
-                        <a class="btn btn-success btn-sm" href="#">
-                            Pizza <i class="fa fa-pie-chart"></i>
+                        <a class="btn btn-success btn-sm" href="">
+                            Pizza <i class="fa fa-plus"></i>
                         </a>
                     </div>
 

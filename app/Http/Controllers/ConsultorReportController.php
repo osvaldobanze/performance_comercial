@@ -9,6 +9,7 @@ use App\Models\Cao_os as Os;
 use App\Models\Consultor;
 use App\Models\SystemPermition as Permition;
 use DB;
+use Carbon\Carbon;
 
 class ConsultorReportController extends Controller
 {
@@ -32,6 +33,7 @@ class ConsultorReportController extends Controller
 
     public function list_report(Request $request)
     { 
+ 
  
         if (isset($_POST['start_year'])) { 
             $data['start_mth'] = $_POST['start_mth']; $data['start_year'] = $_POST['start_year']; 

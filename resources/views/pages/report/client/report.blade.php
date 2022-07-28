@@ -4,8 +4,8 @@
  
     <div class="pt-3 pb-5">
         <div class="card">
-            <div class="card-header  bg-warning">
-                <h5>Relatorio por Consultor</h5>
+            <div class="card-header">
+                Relatorio por Consultor
             </div>
             <div class="card-body">
                 <h5 class="card-title" style="font-size: 12px">Selecione o consultor/s para obter o relatorio:</h5> <hr>
@@ -85,13 +85,13 @@
 
                     <div class="col-12 pt-4">
                         <a class="btn btn-info btn-sm" id="listBtn">
-                            Gerar Relatorio <i class="fa fa-list"></i>
+                            Gerar Relatorio <i class="fa fa-plus"></i>
                         </a>
-                        <a class="btn btn-warning btn-sm" href="#">
-                            Gerar Grafico <i class="fa fa-bar-chart"></i>
+                        <a class="btn btn-warning btn-sm" href="">
+                            Gerar Grafico <i class="fa fa-plus"></i>
                         </a>
-                        <a class="btn btn-success btn-sm" href="#">
-                            Pizza <i class="fa fa-pie-chart"></i>
+                        <a class="btn btn-success btn-sm" href="">
+                            Pizza <i class="fa fa-plus"></i>
                         </a>
                     </div>
 
@@ -102,74 +102,56 @@
         <div class="row">
             
             @foreach ($consultor_filter as $data)
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card mt-5">
-                        <div class="card-header" style="background: lightgoldenrodyellow">
-                            <h6>{{ $data->no_usuario }}</h6>
+                        <div class="card-header">
+                            <h5>{{ $data->no_usuario }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-sm  table-hover">
-                                    <thead class="thead-dark">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-default">
                                         <tr>
-                                            <th>Período</th>
-                                            <th style="text-align: end">Receita Líquida</th>
-                                            <th style="text-align: end">Custo Fixo</th>
-                                            <th style="text-align: end">Comissão</th>
-                                            <th style="text-align: end">Lucro</th>
+                                            <th scope="col">Período</th>
+                                            <th scope="col">Receita Líquida</th>
+                                            <th scope="col">Custo Fixo</th>
+                                            <th scope="col">Comissão</th>
+                                            <th scope="col">Lucro</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         
                                         @php
-                                            $total_liquido_global = 0; 
-                                            $total_custo_fixo_global = 0; 
-                                            $total_comissao_global = 0; 
-                                            $total_lucro_global = 0; 
+                                            $total_liquido = 0; 
+                                            $total_comissao = 0; 
                                             $query = $consultor_controller->get_receita_liquida_clients($data->co_usuario, $start_mth, $start_year, $end_mth, $end_year);
                                         @endphp
                                         
                                         @foreach ($query as $item)
 
                                             @php
-
                                                 // Pegando a Receita Liquida 
                                                 $imposto = ($item->total_imp_inc == 0) ? $item->total_imp_inc : ($item->total * $item->total_imp_inc)/100;
                                                 $total_liquido = $item->total - $imposto;
-                                                $total_liquido_global += $total_liquido; 
 
                                                 // Pegando  Custo Fixo 
                                                 $total_custo_fixo = $consultor_controller->get_custo_fixo($data->co_usuario);
-                                                $total_custo_fixo_global += $total_custo_fixo; 
 
                                                 // Pegando a Comissao 
                                                 $comissao = ($item->comissao_cn == 0) ? $item->comissao_cn : ($total_liquido * $item->comissao_cn)/100;
                                                 $total_comissao = $total_liquido - $comissao;
-                                                $total_comissao_global += $total_comissao; 
+                                                
 
-                                                
-                                                // Pegando a Comissao 
-                                                $lucro = $total_liquido - ($total_custo_fixo + $total_comissao);
-                                                $total_lucro_global += $lucro; 
-                                                
                                             @endphp
 
                                             <tr>
-                                                <td>{{  Carbon\Carbon::parse($item->data_emissao)->isoFormat('MMMM   Y') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_liquido, 2, ',', '.') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_custo_fixo, 2, ',', '.') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_comissao, 2, ',', '.') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_liquido - ($total_custo_fixo + $total_comissao), 2, ',', '.') }}</td>
+                                                <td>{{ $item->data_emissao }}</td>
+                                                <td>{{ $total_liquido }}</td>
+                                                <td>{{ $total_custo_fixo }}</td>
+                                                <td>{{ $total_comissao }}</td>
+                                                <td>{{ $total_liquido - ($total_custo_fixo + $total_comissao) }}</td>
                                             </tr> 
                                         @endforeach
-                                        
-                                        <tr>
-                                            <td><b>SALDO</b></td>
-                                            <td style="text-align: end; font-weight: 600">{{ number_format($total_liquido_global, 2, ',', '.') }}</td>
-                                            <td style="text-align: end; font-weight: 600">{{ number_format($total_custo_fixo_global, 2, ',', '.') }}</td>
-                                            <td style="text-align: end; font-weight: 600">{{ number_format($total_comissao_global, 2, ',', '.') }}</td>
-                                            <td style="text-align: end; font-weight: 600">{{ number_format($total_lucro_global, 2, ',', '.') }}</td>
-                                        </tr> 
                                     </tbody>
                                 </table>
                             </div>

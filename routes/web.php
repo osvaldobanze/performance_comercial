@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('consultor/report', 'ConsultorReportController@index')->name('cs_report');
 Route::post('/report/list', 'ConsultorReportController@list_report')->name('list_report');
  
+
+
+Route::get('client/report', 'ClientReportController@index')->name('cl_report');
+Route::post('client/report/list', 'ClientReportController@list_report')->name('cl_list_report');
