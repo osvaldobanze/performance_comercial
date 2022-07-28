@@ -11,6 +11,13 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('home');
 });
+ 
+
+Route::get('consultor/report', 'ConsultorReportController@index')->name('cs_report');
+Route::post('/report/list', 'ConsultorReportController@list_report')->name('list_report');
+ 

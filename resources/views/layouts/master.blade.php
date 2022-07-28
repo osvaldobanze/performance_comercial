@@ -1,41 +1,138 @@
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-		<meta name="generator" content="Hugo 0.101.0">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Osvaldo Silvestre Banze"> 
 		<title>Comercial - Performance Comercial</title> 
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <!-- Custom styles for this template -->
+		<link rel="stylesheet" href="{{ asset('css/cust.css') }}">  
 
-		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
- 
-		<link rel="stylesheet" href="{{ asset('css/cust.css') }}">
 
-		
-	</head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-	<body>
-			
-		<main>
-			<div class="container py-4">
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-				<header class="pb-3 mb-4 border-bottom">
-					<a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
-						<span class="fs-4">Comercial - Performance Comercial</span>
-					</a>
-				</header>
 
-				@yield('content')
-
-				<footer class="pt-3 mt-4 text-muted border-top">
-					&copy; {{ date('Y') }}
-				</footer>
+		<script>
+			var SITE_URL = "{{ URL::to('/') }}";
+		</script>
+    </head>
+    <body>
+    
+		<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+			<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>
+			<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+			<div class="navbar-nav">
+				<div class="nav-item text-nowrap">
+				<a class="nav-link px-3" href="#">Sign out</a>
+				</div>
 			</div>
+		</header>
 
-		</main>
+		<div class="container-fluid">
+			<div class="row">
+				<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+					<div class="position-sticky pt-3 sidebar-sticky">
+						{{-- <ul class="nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#">
+								<span data-feather="home" class="align-text-bottom"></span>
+								Dashboard
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+								<span data-feather="file" class="align-text-bottom"></span>
+								Orders
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+								<span data-feather="shopping-cart" class="align-text-bottom"></span>
+								Products
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+								<span data-feather="users" class="align-text-bottom"></span>
+								Customers
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+								<span data-feather="bar-chart-2" class="align-text-bottom"></span>
+								Reports
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+								<span data-feather="layers" class="align-text-bottom"></span>
+								Integrations
+								</a>
+							</li>
+						</ul> --}}
 
-	</body>
+						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+						<span>Relatorios</span>
+							<a class="link-secondary" href="#" aria-label="Add a new report">
+								<span data-feather="plus-circle" class="align-text-bottom"></span>
+							</a>
+						</h6>
+						<ul class="nav flex-column mb-2">
+
+							<li class="nav-item">
+								<a class="nav-link" href="">
+									<span data-feather="bar-chart" class="align-text-bottom"></span>
+									Por Cliente
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ route('cs_report') }}">
+									<span data-feather="layers" class="align-text-bottom"></span>
+									Por Consultor
+								</a>
+							</li>
+							 
+						</ul>
+					</div>
+				</nav>
+
+				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+					@yield('content')
+				</main>
+			</div>
+        </div>
+		
+		 
+		<script src="{{ asset('js/custom.js') }}"></script>
+
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+		</script>
+
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
+		</script> 
+
+		<script src="{{ asset('js/dashboard.js') }}"></script>
+
+		<script>
+			$(document).ready(function() {
+				$('.multiple').select2({
+					allowClear: true,
+					width: '300px',
+					height: '34px',
+					placeholder: 'select..'
+				});
+ 
+			});
+		</script>
+
+    </body>
 </html>
