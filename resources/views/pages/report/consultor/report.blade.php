@@ -133,7 +133,7 @@
                                             @php
 
                                                 // Pegando a Receita Liquida 
-                                                $imposto = ($item->total_imp_inc == 0) ? $item->total_imp_inc : ($item->total * $item->total_imp_inc)/100;
+                                                $imposto = ($item->total_imp_inc == 0) ? 0 : ($item->total * $item->total_imp_inc)/100;
                                                 $total_liquido = $item->total - $imposto;
                                                 $total_liquido_global += $total_liquido; 
 
@@ -142,23 +142,24 @@
                                                 $total_custo_fixo_global += $total_custo_fixo; 
 
                                                 // Pegando a Comissao 
-                                                $comissao = ($item->comissao_cn == 0) ? $item->comissao_cn : ($total_liquido * $item->comissao_cn)/100;
-                                                $total_comissao = $total_liquido - $comissao;
+                                                $total_comissao = ($item->comissao_cn == 0) ? 0 : (($total_liquido * $item->total_imp_inc)/100) * ($item->comissao_cn /100);
                                                 $total_comissao_global += $total_comissao; 
 
                                                 
-                                                // Pegando a Comissao 
+                                                // Pegando lucro 
                                                 $lucro = $total_liquido - ($total_custo_fixo + $total_comissao);
                                                 $total_lucro_global += $lucro; 
                                                 
                                             @endphp
 
                                             <tr>
-                                                <td>{{  Carbon\Carbon::parse($item->data_emissao)->isoFormat('MMMM   Y') }}</td>
+                                                <td>
+                                                    {{  Carbon\Carbon::parse($item->data_emissao)->isoFormat('MMMM   Y') }}
+                                                </td>
                                                 <td style="text-align: end">{{ number_format($total_liquido, 2, ',', '.') }}</td>
                                                 <td style="text-align: end">{{ number_format($total_custo_fixo, 2, ',', '.') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_comissao, 2, ',', '.') }}</td>
-                                                <td style="text-align: end">{{ number_format($total_liquido - ($total_custo_fixo + $total_comissao), 2, ',', '.') }}</td>
+                                                <td style="text-align: end">{{ number_format($total_comissao, 2, ',', '.') }}  </td>
+                                                <td style="text-align: end">{{ number_format($lucro, 2, ',', '.') }}</td>
                                             </tr> 
                                         @endforeach
                                         
