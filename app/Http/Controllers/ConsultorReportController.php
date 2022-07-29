@@ -34,19 +34,18 @@ class ConsultorReportController extends Controller
     public function list_report(Request $request)
     { 
  
- 
+        
         if (isset($_POST['start_year'])) { 
             $data['start_mth'] = $_POST['start_mth']; $data['start_year'] = $_POST['start_year']; 
             $data['end_mth'] = $_POST['end_mth']; $data['end_year'] = $_POST['end_year'];
         } else {
             $data['start_mth'] = 01; $data['start_year'] = 2007; $data['end_mth'] = 01; $data['end_year'] = date('Y');
-        }
-
-
+        } 
+        
         $data['consultor_controller'] = $this;
         $data['yearList'] = $this->fatura->yearList();
 
-        $data['consultor_filter'] = Consultor::whereIn('co_usuario', [$request->consultor])->get();
+        $data['consultor_filter'] = Consultor::whereIn('co_usuario', $request->consultor)->orderBy('no_usuario')->get();
          
         $data['consultor_list'] = $this->get_consultors();
         return view('pages.report.consultor.report', $data);

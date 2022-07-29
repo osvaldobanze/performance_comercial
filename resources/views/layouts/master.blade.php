@@ -8,19 +8,14 @@
         <meta name="author" content="Osvaldo Silvestre Banze"> 
 		<title>Comercial - Performance Comercial</title> 
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-        <!-- Custom styles for this template -->
+        
+		<!-- Custom styles for this site -->
 		<link rel="stylesheet" href="{{ asset('css/cust.css') }}">  
+		<link rel="stylesheet" href="{{ asset('select/2/vanillaSelectBox.css') }}" />
+		<script> var SITE_URL = "{{ URL::to('/') }}"; </script>
+ 
 
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
-		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-		<script src="https://use.fontawesome.com/527e3803fd.js"></script>
-		<script>
-			var SITE_URL = "{{ URL::to('/') }}";
-		</script>
     </head>
     <body>
     
@@ -72,29 +67,12 @@
 				</main>
 			</div>
         </div>
-		
-		 
+
+
+		<script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+		<script src="https://use.fontawesome.com/527e3803fd.js"></script>
+		<script src="{{ asset('select/2/vanillaSelectBox.js') }}"></script>
 		<script src="{{ asset('js/custom.js') }}"></script>
-
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
-		</script>
-
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
-		</script> 
-
 		<script src="{{ asset('js/dashboard.js') }}"></script>
-
-		<script>
-			$(document).ready(function() {
-				$('.multiple').select2({
-					allowClear: true,
-					width: '300px',
-					height: '34px',
-					placeholder: 'select..'
-				});
- 
-			});
-		</script>
-
     </body>
 </html>

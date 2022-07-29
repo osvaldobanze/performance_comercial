@@ -15,6 +15,13 @@ $('#start_mth, #start_year, #end_mth, #end_year').change(function() {
     $(".relatorio_compras_excel").attr("href", SITE_URL + "/relatorio_compras_excel/" + di + "/" + df + "/" + estado);
 });
 
+let mySelect = new vanillaSelectBox(".select_inp", {
+    maxWidth: 500,
+    maxHeight: 400,
+    minWidth: -1,
+    search: true,
+    placeHolder: "Selecione o Consultor...."
+});
 
 // Alterando a action do form ao pressionar um botao especifico
 var submitForm = function(method){

@@ -14,14 +14,13 @@
                      
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="consultor" class="form-label">Consultor</label>
-                            <select id="consultor" required name="consultor" class="form-select">
+                            <label for="consultor" class="form-label">Consultor:</label> <br>
+                            <select id="consultor" required name="consultor[]" multiple class="form-control select_inp">
                                 @foreach ($consultor_list as $data)
                                     <option value="{{ $data->co_usuario }}">{{ $data->no_usuario }}</option>
                                 @endforeach
                             </select>
                         </div>
-      
                     </div>
 
                     <h5 class="card-title  pt-5" style="font-size: 12px">Periodo:</h5> <hr>
