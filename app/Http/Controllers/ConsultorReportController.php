@@ -33,8 +33,7 @@ class ConsultorReportController extends Controller
 
     public function list_report(Request $request)
     { 
- 
-        
+  
         if (isset($_POST['start_year'])) { 
             $data['start_mth'] = $_POST['start_mth']; $data['start_year'] = $_POST['start_year']; 
             $data['end_mth'] = $_POST['end_mth']; $data['end_year'] = $_POST['end_year'];
@@ -49,6 +48,43 @@ class ConsultorReportController extends Controller
          
         $data['consultor_list'] = $this->get_consultors();
         return view('pages.report.consultor.report', $data);
+    }
+
+    public function chart_report(Request $request)
+    { 
+         
+        $data['consultor_filter'] = Consultor::whereIn('co_usuario', $request->consultor)->orderBy('no_usuario')->get();
+
+        $cao_os = Os::whereIn('co_usuario', $request->consultor)->pluck('co_os');
+
+        // return Fatura::select('*')->groupBy('cao_os.co_usuario')
+        //     ->whereRaw('YEAR(`data_emissao`) BETWEEN '.$request->start_year.' AND '.$request->end_year.' AND MONTH(`data_emissao`) BETWEEN '.$request->start_mth.' AND '.$request->end_mth.'')
+        //     ->whereIn('cao_fatura.co_os', $cao_os)
+        //     ->leftJoin('cao_os', 'cao_fatura.co_os', 'cao_os.co_os')
+        // ->get(); 
+
+        
+        // return Fatura::select('co_usuario', DB::raw('SUM(total) as totals'))
+        // return Fatura::select('co_usuario', 'data_emissao',
+        //     DB::raw(' 
+        //     (CASE WHEN cao_fatura.total_imp_inc = 0 THEN 0 WHEN cao_fatura.total_imp_inc != SUM(total) - 0 THEN (  SUM(total) - ( SUM(total) * cao_fatura.total_imp_inc)/100 ) END) AS totals '
+        //     )) 
+        //     ->groupBy('cao_fatura.co_cliente')
+        //     ->whereRaw('YEAR(`data_emissao`) BETWEEN '.$request->start_year.' AND '.$request->end_year.' AND MONTH(`data_emissao`) BETWEEN '.$request->start_mth.' AND '.$request->end_mth.'')
+        //     ->whereIn('cao_fatura.co_os', $cao_os)
+        //     ->leftJoin('cao_os', 'cao_fatura.co_os', 'cao_os.co_os')
+        // ->get(); 
+
+      return  Fatura::select('cao_fatura.data_emissao', 'total', 'co_usuario', 'total_imp_inc')
+            ->groupBy('cao_fatura.co_cliente')
+            ->whereRaw('YEAR(`data_emissao`) BETWEEN '.$request->start_year.' AND '.$request->end_year.' AND MONTH(`data_emissao`) BETWEEN '.$request->start_mth.' AND '.$request->end_mth.' ')
+            ->whereIn('cao_fatura.co_os', $cao_os) 
+            ->leftJoin('cao_os', 'cao_fatura.co_os', 'cao_os.co_os')
+
+        ->get(); 
+
+
+          
     }
 
     
@@ -67,7 +103,7 @@ class ConsultorReportController extends Controller
         ->get(); 
     }
 
-    public function get_receita_liquida_clients($co_usuario, $start_mth, $start_year, $end_mth, $end_year)
+    public function get_receita_liquida_client_list($co_usuario, $start_mth, $start_year, $end_mth, $end_year)
     {   
         $cao_os = Os::where('co_usuario', $co_usuario)->pluck('co_os');
 
@@ -83,5 +119,18 @@ class ConsultorReportController extends Controller
         $cf = Salario::where('co_usuario', $co_usuario)->first(); 
         return ($cf) ? $$cf = $cf['brut_salario'] : $cf = 0 ;
     }
+
+    public function get_receita_liquida($total_ft, $total_imp_inc)
+    {   
+        $imposto = ($total_imp_inc == 0) ? 0 : ($total_ft * $total_imp_inc)/100;
+        return  $total_liquido = $total_ft - $imposto; 
+    }
+
+    public function get_comissao($total_liquido, $total_imp_inc, $comissao_cn)
+    {   
+        return ($comissao_cn == 0) ? 0 : (($total_liquido * $total_imp_inc)/100) * ($comissao_cn /100);
+    }
+
+ 
 }
 

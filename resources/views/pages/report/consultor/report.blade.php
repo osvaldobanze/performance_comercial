@@ -86,7 +86,7 @@
                         <a class="btn btn-info btn-sm" id="listBtn">
                             Gerar Relatorio <i class="fa fa-list"></i>
                         </a>
-                        <a class="btn btn-warning btn-sm" href="#">
+                        <a class="btn btn-warning btn-sm" id="chartBtn" href="#">
                             Gerar Grafico <i class="fa fa-bar-chart"></i>
                         </a>
                         <a class="btn btn-success btn-sm" href="#">
@@ -107,6 +107,7 @@
                             <h6>{{ $data->no_usuario }}</h6>
                         </div>
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table table-striped table-sm  table-hover">
                                     <thead class="thead-dark">
@@ -125,26 +126,24 @@
                                             $total_custo_fixo_global = 0; 
                                             $total_comissao_global = 0; 
                                             $total_lucro_global = 0; 
-                                            $query = $consultor_controller->get_receita_liquida_clients($data->co_usuario, $start_mth, $start_year, $end_mth, $end_year);
+                                            $query = $consultor_controller->get_receita_liquida_client_list($data->co_usuario, $start_mth, $start_year, $end_mth, $end_year);
                                         @endphp
                                         
                                         @foreach ($query as $item)
 
                                             @php
-
+ 
                                                 // Pegando a Receita Liquida 
-                                                $imposto = ($item->total_imp_inc == 0) ? 0 : ($item->total * $item->total_imp_inc)/100;
-                                                $total_liquido = $item->total - $imposto;
-                                                $total_liquido_global += $total_liquido; 
+                                                $total_liquido = $consultor_controller->get_receita_liquida($item->total, $item->total_imp_inc);
+                                                $total_liquido_global += $item->total; 
 
                                                 // Pegando  Custo Fixo 
                                                 $total_custo_fixo = $consultor_controller->get_custo_fixo($data->co_usuario);
                                                 $total_custo_fixo_global += $total_custo_fixo; 
 
                                                 // Pegando a Comissao 
-                                                $total_comissao = ($item->comissao_cn == 0) ? 0 : (($total_liquido * $item->total_imp_inc)/100) * ($item->comissao_cn /100);
-                                                $total_comissao_global += $total_comissao; 
-
+                                                $total_comissao = $consultor_controller->get_comissao($total_liquido, $item->total_imp_inc, $item->comissao_cn);
+                                                $total_comissao_global += $total_comissao;
                                                 
                                                 // Pegando lucro 
                                                 $lucro = $total_liquido - ($total_custo_fixo + $total_comissao);
@@ -156,11 +155,12 @@
                                                 <td>
                                                     {{  Carbon\Carbon::parse($item->data_emissao)->isoFormat('MMMM   Y') }}
                                                 </td>
-                                                <td style="text-align: end">{{ number_format($total_liquido, 2, ',', '.') }}</td>
+                                                <td style="text-align: end">{{ number_format($item->total, 2, ',', '.') }}</td>
                                                 <td style="text-align: end">{{ number_format($total_custo_fixo, 2, ',', '.') }}</td>
                                                 <td style="text-align: end">{{ number_format($total_comissao, 2, ',', '.') }}  </td>
                                                 <td style="text-align: end">{{ number_format($lucro, 2, ',', '.') }}</td>
                                             </tr> 
+
                                         @endforeach
                                         
                                         <tr>
@@ -170,6 +170,7 @@
                                             <td style="text-align: end; font-weight: 600">{{ number_format($total_comissao_global, 2, ',', '.') }}</td>
                                             <td style="text-align: end; font-weight: 600">{{ number_format($total_lucro_global, 2, ',', '.') }}</td>
                                         </tr> 
+
                                     </tbody>
                                 </table>
                             </div>

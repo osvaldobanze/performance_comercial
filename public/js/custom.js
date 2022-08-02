@@ -32,12 +32,11 @@ var submitForm = function(method){
     //submit form
     $('#reportForm').submit();
 };
-
-$(document).on('click', '#lwistBtn', function(){
+ 
+$(document).on('click', '#chartBtn', function(){
     //set your method - list
-    submitForm('list');
+    submitForm('chart');
 })
-
 
 $(document).on('click', '#listBtn', function(e){
     //set your method - list

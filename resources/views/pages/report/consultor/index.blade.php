@@ -86,7 +86,7 @@
                         <a class="btn btn-info btn-sm" id="listBtn">
                             Gerar Relatorio <i class="fa fa-list"></i>
                         </a>
-                        <a class="btn btn-warning btn-sm" href="#">
+                        <a class="btn btn-warning btn-sm" id="chartBtn" href="#">
                             Gerar Grafico <i class="fa fa-bar-chart"></i>
                         </a>
                         <a class="btn btn-success btn-sm" href="#">
